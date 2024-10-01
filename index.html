@@ -2,37 +2,99 @@
 <html>
 <head>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f5f5f5; /* Light background to match Notion's aesthetic */
-            color: #2f3437; /* Neutral text color */
+        /* Reset and General Styles */
+        * {
             margin: 0;
             padding: 0;
+        }
+
+        html, body {
+            font: 15px/1.3 Arial, sans-serif;
+            color: #4f4f4f;
+            background: #dbe4e6;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
         }
-        #container {
-            border: 2px solid #e3e3e3;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background: #ffffff;
+
+        #clock {
+            width: 370px;
+            padding: 40px;
+            position: relative;
         }
+
+        #clock .display {
+            text-align: center;
+            padding: 40px 20px 20px;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        #clock.light {
+            background-color: #f3f3f3;
+            color: #272e38;
+        }
+
+        #clock.light .display {
+            background-color: #dddddd;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08) inset, 0 1px 1px #fafafa;
+        }
+
+        #clock.dark {
+            background-color: #272e38;
+            color: #cacaca;
+        }
+
+        #clock.dark .display {
+            background-color: #0f1620;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08) inset, 0 1px 1px #2d3642;
+        }
+
+        .button-holder {
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        a.button {
+            background-color: #f6a7b3;
+            background-image: linear-gradient(top, #f6a7b3, #f0a3af);
+            border: 1px solid #eb9ba7;
+            border-radius: 2px;
+            box-shadow: 0 2px 2px #ccc;
+            color: #fff;
+            text-decoration: none !important;
+            padding: 15px 20px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        a.button:hover {
+            opacity: 0.9;
+        }
+
         #timer {
-            font-size: 1.5em;
+            font-size: 2em;
             font-weight: bold;
             margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div id="container">
-        <h1>Time Since 12 Aug 2024, 6:00 PM</h1>
-        <div id="timer">00:00:00:00</div>
+    <div id="clock" class="light">
+        <div class="display">
+            <h1>Time Since 12 Aug 2024, 5:10 PM</h1>
+            <div id="timer">00:00:00:00</div>
+        </div>
+    </div>
+
+    <div class="button-holder">
+        <a class="button">Switch Theme</a>
     </div>
 
     <script>
@@ -62,9 +124,15 @@
             updateTimer();
         }
 
-        // Target date: 12 August 2024, 6:00 PM
-        const targetDate = new Date('August 12, 2024 18:00:00');
+        // Target date: 12 August 2024, 5:10 PM
+        const targetDate = new Date('August 12, 2024 17:10:00');
         startCountingFromDate(targetDate);
+
+        // Toggle between light and dark theme
+        document.querySelector('.button').addEventListener('click', function() {
+            document.getElementById('clock').classList.toggle('light');
+            document.getElementById('clock').classList.toggle('dark');
+        });
     </script>
 </body>
 </html>
