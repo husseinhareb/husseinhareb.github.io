@@ -5,42 +5,66 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f5f5f5; /* Light background to match Notion's aesthetic */
+            color: #2f3437; /* Neutral text color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #container {
+            border: 2px solid #e3e3e3;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
         }
         #timer {
-            font-size: 2em;
-            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Countdown Timer</h1>
-    <div id="timer">00:00:00</div>
+    <div id="container">
+        <h1>Time Since 12 Aug 2024, 6:00 PM</h1>
+        <div id="timer">00:00:00:00</div>
+    </div>
+
     <script>
-        function startCountdown(durationInSeconds) {
-            let remainingTime = durationInSeconds;
+        function startCountingFromDate(targetDate) {
             const timerElement = document.getElementById('timer');
 
             function updateTimer() {
-                const hours = Math.floor(remainingTime / 3600);
-                const minutes = Math.floor((remainingTime % 3600) / 60);
-                const seconds = remainingTime % 60;
+                const now = new Date();
+                const timeDifference = now - targetDate;
 
-                timerElement.textContent = 
-                    String(hours).padStart(2, '0') + ':' +
-                    String(minutes).padStart(2, '0') + ':' +
-                    String(seconds).padStart(2, '0');
+                if (timeDifference >= 0) {
+                    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-                if (remainingTime > 0) {
-                    remainingTime--;
-                    setTimeout(updateTimer, 1000);
+                    timerElement.textContent = 
+                        String(days).padStart(2, '0') + 'd ' +
+                        String(hours).padStart(2, '0') + 'h ' +
+                        String(minutes).padStart(2, '0') + 'm ' +
+                        String(seconds).padStart(2, '0') + 's';
                 }
+
+                requestAnimationFrame(updateTimer);
             }
 
             updateTimer();
         }
 
-        // Start countdown of 1 hour
-        startCountdown(3600);
+        // Target date: 12 August 2024, 6:00 PM
+        const targetDate = new Date('August 12, 2024 18:00:00');
+        startCountingFromDate(targetDate);
     </script>
 </body>
 </html>
